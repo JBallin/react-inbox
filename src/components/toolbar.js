@@ -10,6 +10,10 @@ export default props => {
             unread messages
           </p>
 
+          <a className="btn btn-danger">
+            <i className="fa fa-plus"></i>
+          </a>
+
           <button className="btn btn-default">
             <i className="fa fa-check-square-o"></i>
           </button>
@@ -51,6 +55,10 @@ export default props => {
             unread messages
           </p>
 
+          <a className="btn btn-danger">
+            <i className="fa fa-plus"></i>
+          </a>
+
           <button className="btn btn-default">
             <i className="fa fa-minus-square-o"></i>
           </button>
@@ -91,6 +99,10 @@ export default props => {
             <span className="badge badge">2</span>
             unread messages
           </p>
+
+          <a className="btn btn-danger">
+            <i className="fa fa-plus"></i>
+          </a>
 
           <button className="btn btn-default">
             <i className="fa fa-square-o"></i>
