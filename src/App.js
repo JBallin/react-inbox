@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import ToolBar from './components/toolbar'
-import MessageList from './components/messagelist'
+import ToolBar from './components/ToolBar'
+import MessageList from './components/MessageList'
 
 class App extends Component {
   state = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Labels from './labels'
+import Labels from './Labels'
 
 export default props => {
   return (
