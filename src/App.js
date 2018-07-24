@@ -70,9 +70,9 @@ class App extends Component {
 
   render() {
     return (
-        <MessageList />
       <div className='container'>
         <ToolBar selected={this.state.selected} />
+        <MessageList messages={this.state.messages} />
       </div>
     );
   }
