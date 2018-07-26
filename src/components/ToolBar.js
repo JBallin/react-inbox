@@ -3,6 +3,9 @@ import React from 'react';
 const countSelected = messages => {
   return messages.reduce((count, msg) => msg.selected ? ++count : count, 0);
 }
+const countUnread = messages => {
+  return messages.reduce((count, msg) => msg.read ? count : ++count, 0);
+}
 
 const amountSelected = messages => {
   const numSelected = countSelected(messages);
@@ -30,12 +33,13 @@ const getSelected = messages => {
 export default ({ messages }) => {
 
   const selected = getSelected(messages);
+  const numUnread = countUnread(messages)
 
   return (
     <div className="row toolbar">
       <div className="col-md-12">
         <p className="pull-right">
-          <span className="badge badge">2</span>
+          <span className="badge badge">{numUnread}</span>
           unread messages
         </p>
 
