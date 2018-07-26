@@ -40,7 +40,7 @@ export default ({ messages }) => {
       <div className="col-md-12">
         <p className="pull-right">
           <span className="badge badge">{numUnread}</span>
-          unread messages
+          unread message{`${numUnread !== 1 ? 's': ''}`}
         </p>
 
         <a className="btn btn-danger">
