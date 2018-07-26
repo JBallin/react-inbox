@@ -47,7 +47,7 @@ export default ({ messages }) => {
           <i className="fa fa-plus"></i>
         </a>
 
-        <button className="btn btn-default" disabled={selected.disabled}>
+        <button className="btn btn-default">
           <i className={`fa fa-${selected.check}square-o`}></i>
         </button>
 
