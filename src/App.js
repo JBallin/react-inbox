@@ -5,7 +5,6 @@ import MessageList from './components/MessageList'
 
 class App extends Component {
   state = {
-    selected: 'none',
     messages: [
       {
         "id": 1,
@@ -71,7 +70,7 @@ class App extends Component {
   render() {
     return (
       <div className='container'>
-        <ToolBar selected={this.state.selected} />
+        <ToolBar messages={this.state.messages} />
         <MessageList messages={this.state.messages} />
       </div>
     );
