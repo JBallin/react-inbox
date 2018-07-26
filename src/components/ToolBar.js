@@ -22,8 +22,8 @@ const amountSelected = messages => {
 const getSelected = messages => {
   const amt = amountSelected(messages);
 
-  if (amt === 'all') return { check: 'check-', disabled: '' }
-  if (amt === 'some') return { check: 'minus-', disabled: '' }
+  if (amt === 'all') return { check: 'check-', disabled: null }
+  if (amt === 'some') return { check: 'minus-', disabled: null }
   if (amt === 'none') return { check: '', disabled: 'disabled'}
 
   throw new Error('Wrong input to getSelected');
