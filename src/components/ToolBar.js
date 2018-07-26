@@ -1,140 +1,78 @@
 import React from 'react';
 
-export default props => {
-  if (props.selected === 'all') {
-    return (
-      <div className="row toolbar">
-        <div className="col-md-12">
-          <p className="pull-right">
-            <span className="badge badge">2</span>
-            unread messages
-          </p>
+const countSelected = messages => {
+  return messages.reduce((count, msg) => msg.selected ? ++count : count, 0);
+}
 
-          <a className="btn btn-danger">
-            <i className="fa fa-plus"></i>
-          </a>
+const amountSelected = messages => {
+  const numSelected = countSelected(messages);
+  const numMessages = messages.length;
+  const selectedRatio = numSelected/numMessages;
 
-          <button className="btn btn-default">
-            <i className="fa fa-check-square-o"></i>
-          </button>
+  if (selectedRatio === 1) return 'all'
+  if (selectedRatio > 0 && selectedRatio < 1) return 'some'
+  if (selectedRatio === 0) return 'none'
 
-          <button className="btn btn-default">
-            Mark As Read
-          </button>
+  throw new Error('selectedRatio not in range[0,1]')
+}
 
-          <button className="btn btn-default">
-            Mark As Unread
-          </button>
+const getSelected = messages => {
+  const amt = amountSelected(messages);
 
-          <select className="form-control label-select">
-            <option>Apply label</option>
-            <option value="dev">dev</option>
-            <option value="personal">personal</option>
-            <option value="gschool">gschool</option>
-          </select>
+  if (amt === 'all') return { check: 'check-' }
+  if (amt === 'some') return { check: 'minus-' }
+  if (amt === 'none') return { check: '', disabled: 'disabled'}
 
-          <select className="form-control label-select">
-            <option>Remove label</option>
-            <option value="dev">dev</option>
-            <option value="personal">personal</option>
-            <option value="gschool">gschool</option>
-          </select>
+  throw new Error('Wrong input to getSelected');
+}
 
-          <button className="btn btn-default">
-            <i className="fa fa-trash-o"></i>
-          </button>
-        </div>
+
+export default ({ messages }) => {
+
+  const selected = getSelected(messages);
+
+  return (
+    <div className="row toolbar">
+      <div className="col-md-12">
+        <p className="pull-right">
+          <span className="badge badge">2</span>
+          unread messages
+        </p>
+
+        <a className="btn btn-danger">
+          <i className="fa fa-plus"></i>
+        </a>
+
+        <button className="btn btn-default" disabled={selected.disabled}>
+          <i className={`fa fa-${selected.check}square-o`}></i>
+        </button>
+
+        <button className="btn btn-default" disabled={selected.disabled}>
+          Mark As Read
+        </button>
+
+        <button className="btn btn-default" disabled={selected.disabled}>
+          Mark As Unread
+        </button>
+
+        <select className="form-control label-select" disabled={selected.disabled}>
+          <option>Apply label</option>
+          <option value="dev">dev</option>
+          <option value="personal">personal</option>
+          <option value="gschool">gschool</option>
+        </select>
+
+        <select className="form-control label-select" disabled={selected.disabled}>
+          <option>Remove label</option>
+          <option value="dev">dev</option>
+          <option value="personal">personal</option>
+          <option value="gschool">gschool</option>
+        </select>
+
+        <button className="btn btn-default" disabled={selected.disabled}>
+          <i className="fa fa-trash-o"></i>
+        </button>
       </div>
-    )
-  } else if (props.selected === 'some') {
-    return (
-      <div className="row toolbar">
-        <div className="col-md-12">
-          <p className="pull-right">
-            <span className="badge badge">2</span>
-            unread messages
-          </p>
-
-          <a className="btn btn-danger">
-            <i className="fa fa-plus"></i>
-          </a>
-
-          <button className="btn btn-default">
-            <i className="fa fa-minus-square-o"></i>
-          </button>
-
-          <button className="btn btn-default">
-            Mark As Read
-          </button>
-
-          <button className="btn btn-default">
-            Mark As Unread
-          </button>
-
-          <select className="form-control label-select">
-            <option>Apply label</option>
-            <option value="dev">dev</option>
-            <option value="personal">personal</option>
-            <option value="gschool">gschool</option>
-          </select>
-
-          <select className="form-control label-select">
-            <option>Remove label</option>
-            <option value="dev">dev</option>
-            <option value="personal">personal</option>
-            <option value="gschool">gschool</option>
-          </select>
-
-          <button className="btn btn-default">
-            <i className="fa fa-trash-o"></i>
-          </button>
-        </div>
-      </div>
-    )
-  } else if (props.selected === 'none') {
-    return (
-      <div className="row toolbar">
-        <div className="col-md-12">
-          <p className="pull-right">
-            <span className="badge badge">2</span>
-            unread messages
-          </p>
-
-          <a className="btn btn-danger">
-            <i className="fa fa-plus"></i>
-          </a>
-
-          <button className="btn btn-default">
-            <i className="fa fa-square-o"></i>
-          </button>
-
-          <button className="btn btn-default" disabled="disabled">
-            Mark As Read
-          </button>
-
-          <button className="btn btn-default" disabled="disabled">
-            Mark As Unread
-          </button>
-
-          <select className="form-control label-select" disabled="disabled">
-            <option>Apply label</option>
-            <option value="dev">dev</option>
-            <option value="personal">personal</option>
-            <option value="gschool">gschool</option>
-          </select>
-
-          <select className="form-control label-select" disabled="disabled">
-            <option>Remove label</option>
-            <option value="dev">dev</option>
-            <option value="personal">personal</option>
-            <option value="gschool">gschool</option>
-          </select>
-
-          <button className="btn btn-default" disabled="disabled">
-            <i className="fa fa-trash-o"></i>
-          </button>
-        </div>
-      </div>
-    )
-  }
+    </div>
+  )
 }
