@@ -67,11 +67,19 @@ class App extends Component {
     ]
   }
 
+  toggleSelected = (message, e) => {
+    const updateSelectedMessages = this.state.messages.map(msg => {
+      if (msg.id === message.id) msg.selected = e.target.checked;
+      return msg;
+    })
+    this.setState({messages: updateSelectedMessages})
+  }
+
   render() {
     return (
       <div className='container'>
         <ToolBar messages={this.state.messages} />
-        <MessageList messages={this.state.messages} />
+        <MessageList messages={this.state.messages} toggleSelected={this.toggleSelected}/>
       </div>
     );
   }

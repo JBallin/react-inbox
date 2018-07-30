@@ -1,6 +1,6 @@
 import React from 'react';
 import Message from './Message';
 
-export default props => {
-  return props.messages.map(message => <Message message={message} key={message.id}/>)
+export default ({ messages, toggleSelected }) => {
+  return messages.map(message => <Message message={message} toggleSelected={toggleSelected} key={message.id}/>)
 }
