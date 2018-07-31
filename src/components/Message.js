@@ -11,7 +11,7 @@ export default ({ message, toggleSelected, toggleStarred }) => {
       <div className="col-xs-1">
         <div className="row">
           <div className="col-xs-2">
-            <input type="checkbox" onChange={e => toggleSelected(message, e)}/>
+            <input type="checkbox" checked={Boolean(message.selected)} onChange={e => toggleSelected(message, e)}/>
           </div>
           <div className="col-xs-2">
             <i className={`star fa fa-star${getStarred(message)}`} onClick={e => toggleStarred(message, e)}></i>
