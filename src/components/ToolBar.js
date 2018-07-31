@@ -30,7 +30,7 @@ const getSelected = messages => {
 }
 
 
-export default ({ messages, toggleRead }) => {
+export default ({ messages, toggleRead, toggleSelectedAll }) => {
 
   const selected = getSelected(messages);
   const numUnread = countUnread(messages)
@@ -48,7 +48,7 @@ export default ({ messages, toggleRead }) => {
         </a>
 
         <button className="btn btn-default">
-          <i className={`fa fa-${selected.check}square-o`}></i>
+          <i className={`fa fa-${selected.check}square-o`} onClick={() => toggleSelectedAll(amountSelected(messages))}></i>
         </button>
 
         <button className="btn btn-default" disabled={selected.disabled} onClick={() => toggleRead(true, messages)}>

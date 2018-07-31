@@ -75,6 +75,24 @@ class App extends Component {
     this.setState({messages: updateSelectedMessages})
   }
 
+  toggleSelectedAll = amtSelected => {
+    let toggleSelected;
+    if (amtSelected === 'none' || amtSelected === 'some') {
+      toggleSelected = true;
+    } else if (amtSelected === 'all') {
+      toggleSelected = false;
+    } else {
+      throw new Error('Incorrect input to toggleSelectedAll')
+    }
+
+    const updateSelectedAllMessages = this.state.messages.map(msg => {
+      msg.selected = toggleSelected;
+      return msg;
+    })
+
+    this.setState({messages: updateSelectedAllMessages})
+  }
+
   toggleStarred = (message, e) => {
     const updateStarredMessages = this.state.messages.map(msg => {
       if (msg.id === message.id) msg.starred = !msg.starred;
@@ -94,7 +112,7 @@ class App extends Component {
   render() {
     return (
       <div className='container'>
-        <ToolBar messages={this.state.messages} toggleRead={this.toggleRead}/>
+        <ToolBar messages={this.state.messages} toggleRead={this.toggleRead} toggleSelectedAll={this.toggleSelectedAll}/>
         <MessageList messages={this.state.messages} toggleSelected={this.toggleSelected} toggleStarred={this.toggleStarred}/>
       </div>
     );
