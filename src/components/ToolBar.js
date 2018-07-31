@@ -55,7 +55,7 @@ export default ({ messages, toggleRead }) => {
           Mark As Read
         </button>
 
-        <button className="btn btn-default" disabled={selected.disabled}>
+        <button className="btn btn-default" disabled={selected.disabled} onClick={() => toggleRead(false, messages)}>
           Mark As Unread
         </button>
 
