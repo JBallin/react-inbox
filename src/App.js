@@ -83,10 +83,18 @@ class App extends Component {
     this.setState({messages: updateStarredMessages})
   }
 
+  toggleRead = (isRead, messages) => {
+    const updateReadMessages = this.state.messages.map(msg => {
+      if (msg.selected) msg.read = isRead;
+      return msg;
+    })
+    this.setState({messages: updateReadMessages})
+  }
+
   render() {
     return (
       <div className='container'>
-        <ToolBar messages={this.state.messages} />
+        <ToolBar messages={this.state.messages} toggleRead={this.toggleRead}/>
         <MessageList messages={this.state.messages} toggleSelected={this.toggleSelected} toggleStarred={this.toggleStarred}/>
       </div>
     );
