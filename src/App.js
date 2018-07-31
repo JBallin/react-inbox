@@ -93,7 +93,7 @@ class App extends Component {
     this.setState({messages: updateSelectedAllMessages})
   }
 
-  toggleStarred = (message, e) => {
+  toggleStarred = message => {
     const updateStarredMessages = this.state.messages.map(msg => {
       if (msg.id === message.id) msg.starred = !msg.starred;
       return msg
