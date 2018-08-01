@@ -76,17 +76,17 @@ class App extends Component {
   }
 
   toggleSelectedAll = amtSelected => {
-    let toggleSelected;
+    let isAllSelected;
     if (amtSelected === 'none' || amtSelected === 'some') {
-      toggleSelected = true;
+      isAllSelected = true;
     } else if (amtSelected === 'all') {
-      toggleSelected = false;
+      isAllSelected = false;
     } else {
       throw new Error('Incorrect input to toggleSelectedAll')
     }
 
     const updateSelectedAllMessages = this.state.messages.map(msg => {
-      msg.selected = toggleSelected;
+      msg.selected = isAllSelected;
       return msg;
     })
 
