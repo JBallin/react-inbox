@@ -10,7 +10,7 @@ const countUnread = messages => {
 const amountSelected = messages => {
   const numSelected = countSelected(messages);
   const numMessages = messages.length;
-  const selectedRatio = numSelected/numMessages;
+  const selectedRatio = numMessages && numSelected/numMessages;
 
   if (selectedRatio === 1) return 'all'
   if (selectedRatio > 0 && selectedRatio < 1) return 'some'
