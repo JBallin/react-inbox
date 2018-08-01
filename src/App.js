@@ -67,13 +67,18 @@ class App extends Component {
     ]
   }
 
-  toggleSelected = message => {
-    const updateSelectedMessages = this.state.messages.map(msg => {
-      if (msg.id === message.id) msg.selected = !msg.selected;
-      return msg;
-    })
-    this.setState({messages: updateSelectedMessages})
+  toggle = (msg, prop) => {
+    const i = this.state.messages.indexOf(msg);
+    this.setState(prev => (
+      {messages: [
+        ...prev.messages.slice(0, i),
+        { ...msg, [prop]: !msg[prop] },
+        ...prev.messages.slice(i + 1)
+      ]}
+    ))
   }
+
+  toggleSelected = msg => this.toggle(msg, 'selected');
 
   toggleSelectedAll = amtSelected => {
     let isAllSelected;
@@ -93,13 +98,7 @@ class App extends Component {
     this.setState({messages: updateSelectedAllMessages})
   }
 
-  toggleStarred = message => {
-    const updateStarredMessages = this.state.messages.map(msg => {
-      if (msg.id === message.id) msg.starred = !msg.starred;
-      return msg
-    })
-    this.setState({messages: updateStarredMessages})
-  }
+  toggleStarred = msg => this.toggle(msg, 'starred')
 
   toggleRead = (isRead, messages) => {
     const updateReadMessages = this.state.messages.map(msg => {
