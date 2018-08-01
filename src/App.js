@@ -90,27 +90,28 @@ class App extends Component {
       throw new Error('Incorrect input to updateSelectedAll')
     }
 
-    const updateSelectedAllMessages = this.state.messages.map(msg => {
-      msg.selected = isAllSelected;
-      return msg;
-    })
+    this.setState(prev => ({
+      messages: prev.messages.map(msg => ({
+        ...msg, selected: isAllSelected
+      }))
+    }))
 
-    this.setState({messages: updateSelectedAllMessages})
   }
 
   toggleStarred = msg => this.toggle(msg, 'starred')
 
-  toggleRead = (isRead, messages) => {
-    const updateReadMessages = this.state.messages.map(msg => {
-      if (msg.selected) msg.read = isRead;
-      return msg;
-    })
-    this.setState({messages: updateReadMessages})
+  updateRead = isRead => {
+    this.setState(prev => ({
+      messages: prev.messages.map(msg => (
+          msg.selected ? {...msg, read: isRead} : msg
+        ))
+    }))
   }
 
   deleteSelected = () => {
-    const rmDeleted = this.state.messages.filter(msg => !msg.selected);
-    this.setState({messages: rmDeleted})
+    this.setState(prev => ({
+      messages: prev.messages.filter(msg => !msg.selected)
+    }))
   }
 
   render() {
