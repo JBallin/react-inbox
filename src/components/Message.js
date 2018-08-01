@@ -20,7 +20,7 @@ export default ({ message, toggleSelected, toggleStarred }) => {
       </div>
       <div className="col-xs-11">
         <Labels labels={message.labels} />
-        <a href="#">{message.subject}</a>
+        <a href={`#${message.id}`}>{message.subject}</a>
       </div>
     </div>
   )
