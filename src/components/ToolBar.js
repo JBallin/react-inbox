@@ -3,14 +3,14 @@ import React from 'react';
 const getSelected = messages => {
   const numSelected = messages.filter(msg => msg.selected).length;
 
+  if (numSelected === 0) {
+    return {amt: 'none', checkClass: '', isDisabled: true};
+  }
   if (numSelected === messages.length) {
     return {amt: 'all', checkClass: 'check-', isDisabled: null};
   }
   if (numSelected < messages.length && numSelected > 0) {
     return {amt: 'some', checkClass: 'minus-', isDisabled: null};
-  }
-  if (numSelected === 0) {
-    return {amt: 'none', checkClass: '', isDisabled: true};
   }
   throw new Error(`getSelected: numSelected (${numSelected}) < 0`)
 }
