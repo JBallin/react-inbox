@@ -109,10 +109,15 @@ class App extends Component {
     this.setState({messages: updateReadMessages})
   }
 
+  deleteSelected = () => {
+    const rmDeleted = this.state.messages.filter(msg => !msg.selected);
+    this.setState({messages: rmDeleted})
+  }
+
   render() {
     return (
       <div className='container'>
-        <ToolBar messages={this.state.messages} toggleRead={this.toggleRead} toggleSelectedAll={this.toggleSelectedAll}/>
+        <ToolBar messages={this.state.messages} toggleRead={this.toggleRead} toggleSelectedAll={this.toggleSelectedAll} deleteSelected={this.deleteSelected}/>
         <MessageList messages={this.state.messages} toggleSelected={this.toggleSelected} toggleStarred={this.toggleStarred}/>
       </div>
     );

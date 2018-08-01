@@ -30,7 +30,7 @@ const getSelected = messages => {
 }
 
 
-export default ({ messages, toggleRead, toggleSelectedAll }) => {
+export default ({ messages, toggleRead, toggleSelectedAll, deleteSelected }) => {
 
   const selected = getSelected(messages);
   const numUnread = countUnread(messages)
@@ -73,7 +73,7 @@ export default ({ messages, toggleRead, toggleSelectedAll }) => {
           <option value="gschool">gschool</option>
         </select>
 
-        <button className="btn btn-default" disabled={selected.disabled}>
+        <button className="btn btn-default" disabled={selected.disabled} onClick={deleteSelected}>
           <i className="fa fa-trash-o"></i>
         </button>
       </div>
