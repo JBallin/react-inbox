@@ -82,9 +82,9 @@ class App extends Component {
 
   toggleSelectedAll = amtSelected => {
     let isAllSelected;
-    if (amtSelected === 'none' || amtSelected === 'some') {
+    if (amtSelected === 'none') {
       isAllSelected = true;
-    } else if (amtSelected === 'all') {
+    } else if (amtSelected === 'all' || amtSelected === 'some') {
       isAllSelected = false;
     } else {
       throw new Error('Incorrect input to toggleSelectedAll')
