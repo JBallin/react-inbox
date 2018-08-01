@@ -16,8 +16,7 @@ const getSelected = messages => {
 }
 
 
-export default ({ messages, toggleRead, toggleSelectedAll, deleteSelected }) => {
-
+export default ({messages, updateRead, toggleSelectedAll, deleteSelected}) => {
   const { amt, checkClass, isDisabled } = getSelected(messages);
   const numUnread = messages.filter(msg => !msg.read).length
 
@@ -41,11 +40,19 @@ export default ({ messages, toggleRead, toggleSelectedAll, deleteSelected }) => 
           <i className={`fa fa-${checkClass}square-o`}></i>
         </button>
 
-        <button className="btn btn-default" disabled={isDisabled} onClick={() => toggleRead(true, messages)}>
+        <button
+          className="btn btn-default"
+          disabled={isDisabled}
+          onClick={() => updateRead(true)}
+        >
           Mark As Read
         </button>
 
-        <button className="btn btn-default" disabled={isDisabled} onClick={() => toggleRead(false, messages)}>
+        <button
+          className="btn btn-default"
+          disabled={isDisabled}
+          onClick={() => updateRead(false)}
+        >
           Mark As Unread
         </button>
 
@@ -63,7 +70,11 @@ export default ({ messages, toggleRead, toggleSelectedAll, deleteSelected }) => 
           <option value="gschool">gschool</option>
         </select>
 
-        <button className="btn btn-default" disabled={isDisabled} onClick={deleteSelected}>
+        <button
+          className="btn btn-default"
+          disabled={isDisabled}
+          onClick={deleteSelected}
+        >
           <i className="fa fa-trash-o"></i>
         </button>
       </div>
