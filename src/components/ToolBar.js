@@ -33,8 +33,12 @@ export default ({ messages, toggleRead, toggleSelectedAll, deleteSelected }) => 
           <i className="fa fa-plus"></i>
         </a>
 
-        <button className="btn btn-default">
-          <i className={`fa fa-${checkClass}square-o`} onClick={() => toggleSelectedAll(amt)}></i>
+        <button
+          className="btn btn-default"
+          onClick={() => toggleSelectedAll(amt)}
+          disabled={!messages.length}
+        >
+          <i className={`fa fa-${checkClass}square-o`}></i>
         </button>
 
         <button className="btn btn-default" disabled={isDisabled} onClick={() => toggleRead(true, messages)}>
