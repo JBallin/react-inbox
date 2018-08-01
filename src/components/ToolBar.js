@@ -1,39 +1,25 @@
 import React from 'react';
 
-const countSelected = messages => {
-  return messages.reduce((count, msg) => msg.selected ? ++count : count, 0);
-}
-const countUnread = messages => {
-  return messages.reduce((count, msg) => msg.read ? count : ++count, 0);
-}
-
-const amountSelected = messages => {
-  const numSelected = countSelected(messages);
-  const numMessages = messages.length;
-  const selectedRatio = numMessages && numSelected/numMessages;
-
-  if (selectedRatio === 1) return 'all'
-  if (selectedRatio > 0 && selectedRatio < 1) return 'some'
-  if (selectedRatio === 0) return 'none'
-
-  throw new Error('selectedRatio not in range[0,1]')
-}
-
 const getSelected = messages => {
-  const amt = amountSelected(messages);
+  const numSelected = messages.filter(msg => msg.selected).length;
 
-  if (amt === 'all') return { check: 'check-', disabled: null }
-  if (amt === 'some') return { check: 'minus-', disabled: null }
-  if (amt === 'none') return { check: '', disabled: 'disabled'}
-
-  throw new Error('Wrong input to getSelected');
+  if (numSelected === messages.length) {
+    return {amt: 'all', checkClass: 'check-', isDisabled: null};
+  }
+  if (numSelected < messages.length && numSelected > 0) {
+    return {amt: 'some', checkClass: 'minus-', isDisabled: null};
+  }
+  if (numSelected === 0) {
+    return {amt: 'none', checkClass: '', isDisabled: true};
+  }
+  throw new Error(`getSelected: numSelected (${numSelected}) < 0`)
 }
 
 
 export default ({ messages, toggleRead, toggleSelectedAll, deleteSelected }) => {
 
-  const selected = getSelected(messages);
-  const numUnread = countUnread(messages)
+  const { amt, checkClass, isDisabled } = getSelected(messages);
+  const numUnread = messages.filter(msg => !msg.read).length
 
   return (
     <div className="row toolbar">
@@ -48,32 +34,32 @@ export default ({ messages, toggleRead, toggleSelectedAll, deleteSelected }) => 
         </a>
 
         <button className="btn btn-default">
-          <i className={`fa fa-${selected.check}square-o`} onClick={() => toggleSelectedAll(amountSelected(messages))}></i>
+          <i className={`fa fa-${checkClass}square-o`} onClick={() => toggleSelectedAll(amt)}></i>
         </button>
 
-        <button className="btn btn-default" disabled={selected.disabled} onClick={() => toggleRead(true, messages)}>
+        <button className="btn btn-default" disabled={isDisabled} onClick={() => toggleRead(true, messages)}>
           Mark As Read
         </button>
 
-        <button className="btn btn-default" disabled={selected.disabled} onClick={() => toggleRead(false, messages)}>
+        <button className="btn btn-default" disabled={isDisabled} onClick={() => toggleRead(false, messages)}>
           Mark As Unread
         </button>
 
-        <select className="form-control label-select" disabled={selected.disabled}>
+        <select className="form-control label-select" disabled={isDisabled}>
           <option>Apply label</option>
           <option value="dev">dev</option>
           <option value="personal">personal</option>
           <option value="gschool">gschool</option>
         </select>
 
-        <select className="form-control label-select" disabled={selected.disabled}>
+        <select className="form-control label-select" disabled={isDisabled}>
           <option>Remove label</option>
           <option value="dev">dev</option>
           <option value="personal">personal</option>
           <option value="gschool">gschool</option>
         </select>
 
-        <button className="btn btn-default" disabled={selected.disabled} onClick={deleteSelected}>
+        <button className="btn btn-default" disabled={isDisabled} onClick={deleteSelected}>
           <i className="fa fa-trash-o"></i>
         </button>
       </div>
