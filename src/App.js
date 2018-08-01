@@ -67,9 +67,9 @@ class App extends Component {
     ]
   }
 
-  toggleSelected = (message, e) => {
+  toggleSelected = message => {
     const updateSelectedMessages = this.state.messages.map(msg => {
-      if (msg.id === message.id) msg.selected = e.target.checked;
+      if (msg.id === message.id) msg.selected = !msg.selected;
       return msg;
     })
     this.setState({messages: updateSelectedMessages})
