@@ -80,14 +80,14 @@ class App extends Component {
 
   toggleSelected = msg => this.toggle(msg, 'selected');
 
-  toggleSelectedAll = amtSelected => {
+  updateSelectedAll = amtSelected => {
     let isAllSelected;
     if (amtSelected === 'none') {
       isAllSelected = true;
     } else if (amtSelected === 'all' || amtSelected === 'some') {
       isAllSelected = false;
     } else {
-      throw new Error('Incorrect input to toggleSelectedAll')
+      throw new Error('Incorrect input to updateSelectedAll')
     }
 
     const updateSelectedAllMessages = this.state.messages.map(msg => {
@@ -116,8 +116,17 @@ class App extends Component {
   render() {
     return (
       <div className='container'>
-        <ToolBar messages={this.state.messages} toggleRead={this.toggleRead} toggleSelectedAll={this.toggleSelectedAll} deleteSelected={this.deleteSelected}/>
-        <MessageList messages={this.state.messages} toggleSelected={this.toggleSelected} toggleStarred={this.toggleStarred}/>
+        <ToolBar
+          messages={this.state.messages}
+          updateRead={this.updateRead}
+          updateSelectedAll={this.updateSelectedAll}
+          deleteSelected={this.deleteSelected}
+        />
+        <MessageList
+          messages={this.state.messages}
+          toggleSelected={this.toggleSelected}
+          toggleStarred={this.toggleStarred}
+        />
       </div>
     );
   }

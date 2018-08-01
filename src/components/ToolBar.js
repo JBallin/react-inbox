@@ -16,7 +16,7 @@ const getSelected = messages => {
 }
 
 
-export default ({messages, updateRead, toggleSelectedAll, deleteSelected}) => {
+export default ({messages, updateRead, updateSelectedAll, deleteSelected}) => {
   const { amt, checkClass, isDisabled } = getSelected(messages);
   const numUnread = messages.filter(msg => !msg.read).length
 
@@ -34,7 +34,7 @@ export default ({messages, updateRead, toggleSelectedAll, deleteSelected}) => {
 
         <button
           className="btn btn-default"
-          onClick={() => toggleSelectedAll(amt)}
+          onClick={() => updateSelectedAll(amt)}
           disabled={!messages.length}
         >
           <i className={`fa fa-${checkClass}square-o`}></i>
