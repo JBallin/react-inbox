@@ -7,10 +7,10 @@ const getSelected = messages => {
     return {amt: 'none', checkClass: '', isDisabled: true};
   }
   if (numSelected === messages.length) {
-    return {amt: 'all', checkClass: 'check-', isDisabled: null};
+    return {amt: 'all', checkClass: 'check-', isDisabled: false};
   }
   if (numSelected < messages.length && numSelected > 0) {
-    return {amt: 'some', checkClass: 'minus-', isDisabled: null};
+    return {amt: 'some', checkClass: 'minus-', isDisabled: false};
   }
   throw new Error(`getSelected: numSelected (${numSelected}) < 0`)
 }
