@@ -5,7 +5,7 @@ import ToolBar from './ToolBar';
 describe('ToolBar', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<ToolBar selected='none' />, div);
+    ReactDOM.render(<ToolBar selected='none' messages={[]} />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 })
