@@ -7,76 +7,65 @@ import seedMessages from './db/seedMessages'
 class App extends Component {
   state = { messages: seedMessages }
 
-  toggle = (msg, prop) => {
-    const i = this.state.messages.indexOf(msg);
-    this.setState(prevState => (
-      {messages: [
-        ...prevState.messages.slice(0, i),
-        { ...msg, [prop]: !msg[prop] },
-        ...prevState.messages.slice(i + 1)
-      ]}
-    ))
-  }
+  toggleProperty = (msg, prop) => {
+    this.setState(prevState => {
+      const { messages } = prevState;
+      const messageToToggle = messages.find(m => m.id === msg.id);
+      messageToToggle[prop] = !messageToToggle[prop];
+      return { messages };
+    });
+  };
 
-  toggleSelected = msg => this.toggle(msg, 'selected');
+  toggleStar = msg => {
+    this.toggleProperty(msg, 'starred');
+  };
 
-  updateSelectedAll = amtSelected => {
-    let isAllSelected;
-    if (amtSelected === 'none') {
-      isAllSelected = true;
-    } else if (amtSelected === 'all' || amtSelected === 'some') {
-      isAllSelected = false;
-    } else {
-      throw new Error('Incorrect input to updateSelectedAll')
-    }
+  toggleSelect = msg => {
+    this.toggleProperty(msg, 'selected');
+  };
 
+  toggleSelectAll = () => {
+    const numSelected = this.state.messages.filter(m => m.selected).length;
+    const selected = !numSelected;
     this.setState(prevState => ({
-      messages: prevState.messages.map(msg => ({
-        ...msg, selected: isAllSelected
-      }))
-    }))
-
-  }
-
-  toggleStarred = msg => this.toggle(msg, 'starred')
+      messages: prevState.messages.map(msg => ({ ...msg, selected }))
+    }));
+  };
 
   updateRead = isRead => {
     this.setState(prevState => ({
-      messages: prevState.messages.map(msg => (
-          msg.selected ? {...msg, read: isRead} : msg
-        ))
-    }))
-  }
+      messages: prevState.messages.map(msg => msg.selected ? {...msg, read: isRead} : msg)
+    }));
+  };
 
   deleteSelected = () => {
     this.setState(prevState => ({
       messages: prevState.messages.filter(msg => !msg.selected)
-    }))
-  }
+    }));
+  };
 
   addLabel = label => {
-    this.setState(prevState => {
-      const messages = prevState.messages.map(msg => {
+    this.setState(prevState => ({
+      messages: prevState.messages.map(msg => {
         if (msg.selected && !msg.labels.includes(label)) {
           msg.labels.push(label);
+          msg.labels.sort();
         }
         return msg;
       })
-      return ({ messages })
-    })
-  }
+    }));
+  };
 
   removeLabel = label => {
-    this.setState(prevState => {
-      const messages = prevState.messages.map(msg => {
+    this.setState(prevState => ({
+      messages: prevState.messages.map(msg => {
         if (msg.selected && msg.labels.includes(label)) {
           msg.labels = msg.labels.filter(l => l !== label);
         }
         return msg;
-      });
-      return ({ messages });
-    });
-  }
+      })
+    }));
+  };
 
   render() {
     return (
@@ -84,15 +73,15 @@ class App extends Component {
         <ToolBar
           messages={this.state.messages}
           updateRead={this.updateRead}
-          updateSelectedAll={this.updateSelectedAll}
+          toggleSelectAll={this.toggleSelectAll}
           deleteSelected={this.deleteSelected}
           addLabel={this.addLabel}
           removeLabel={this.removeLabel}
         />
         <MessageList
           messages={this.state.messages}
-          toggleSelected={this.toggleSelected}
-          toggleStarred={this.toggleStarred}
+          toggleSelect={this.toggleSelect}
+          toggleStar={this.toggleStar}
         />
       </div>
     );

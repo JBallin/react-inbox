@@ -1,33 +1,38 @@
 import React from 'react';
 
-const getSelected = messages => {
-  const numSelected = messages.filter(msg => msg.selected).length;
-
-  if (numSelected === 0) {
-    return {amt: 'none', checkClass: '', isDisabled: true};
-  }
-  if (numSelected === messages.length) {
-    return {amt: 'all', checkClass: 'check-', isDisabled: false};
-  }
-  if (numSelected < messages.length && numSelected > 0) {
-    return {amt: 'some', checkClass: 'minus-', isDisabled: false};
-  }
-  throw new Error(`getSelected: numSelected (${numSelected}) < 0`)
-}
-
-
 const ToolBar = ({
-  messages, updateRead, updateSelectedAll, deleteSelected, addLabel, removeLabel
+  messages,
+  updateRead,
+  toggleSelectAll,
+  deleteSelected,
+  addLabel,
+  removeLabel
 }) => {
-  const { amt, checkClass, isDisabled } = getSelected(messages);
-  const numUnread = messages.filter(msg => !msg.read).length
+  const numSelected = messages.filter(msg => msg.selected).length;
+  const numUnread = messages.filter(msg => !msg.read).length;
+  let selectAllClass;
+  let isDisabled;
+
+  switch(numSelected) {
+    case 0:
+      selectAllClass = '';
+      isDisabled = true;
+      break;
+    case messages.length:
+      selectAllClass = 'check-';
+      isDisabled = false;
+      break;
+    default:
+      selectAllClass = 'minus-';
+      isDisabled = false;
+  }
 
   return (
     <div className="row toolbar">
       <div className="col-md-12">
         <p className="pull-right">
           <span className="badge badge">{numUnread}</span>
-          unread message{`${numUnread !== 1 ? 's': ''}`}
+          unread message{`${numUnread === 1 ? '': 's'}`}
         </p>
 
         <a className="btn btn-danger">
@@ -36,10 +41,10 @@ const ToolBar = ({
 
         <button
           className="btn btn-default"
-          onClick={() => updateSelectedAll(amt)}
+          onClick={toggleSelectAll}
           disabled={!messages.length}
         >
-          <i className={`fa fa-${checkClass}square-o`}></i>
+          <i className={`fa fa-${selectAllClass}square-o`}></i>
         </button>
 
         <button
