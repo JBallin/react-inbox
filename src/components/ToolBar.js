@@ -16,7 +16,9 @@ const getSelected = messages => {
 }
 
 
-const ToolBar = ({messages, updateRead, updateSelectedAll, deleteSelected}) => {
+const ToolBar = ({
+  messages, updateRead, updateSelectedAll, deleteSelected, addLabel, removeLabel
+}) => {
   const { amt, checkClass, isDisabled } = getSelected(messages);
   const numUnread = messages.filter(msg => !msg.read).length
 
@@ -56,15 +58,25 @@ const ToolBar = ({messages, updateRead, updateSelectedAll, deleteSelected}) => {
           Mark As Unread
         </button>
 
-        <select className="form-control label-select" disabled={isDisabled}>
-          <option>Apply label</option>
+        <select
+          value="apply"
+          className="form-control label-select"
+          disabled={isDisabled}
+          onChange={e => {addLabel(e.target.value)}}
+        >
+          <option value="apply" disabled>Apply label</option>
           <option value="dev">dev</option>
           <option value="personal">personal</option>
           <option value="gschool">gschool</option>
         </select>
 
-        <select className="form-control label-select" disabled={isDisabled}>
-          <option>Remove label</option>
+        <select
+          value="remove"
+          className="form-control label-select"
+          disabled={isDisabled}
+          onChange={e => {removeLabel(e.target.value)}}
+        >
+          <option value="remove" disabled>Remove label</option>
           <option value="dev">dev</option>
           <option value="personal">personal</option>
           <option value="gschool">gschool</option>

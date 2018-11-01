@@ -114,6 +114,30 @@ class App extends Component {
     }))
   }
 
+  addLabel = label => {
+    this.setState(prevState => {
+      const messages = prevState.messages.map(msg => {
+        if (msg.selected && !msg.labels.includes(label)) {
+          msg.labels.push(label);
+        }
+        return msg;
+      })
+      return ({ messages })
+    })
+  }
+
+  removeLabel = label => {
+    this.setState(prevState => {
+      const messages = prevState.messages.map(msg => {
+        if (msg.selected && msg.labels.includes(label)) {
+          msg.labels = msg.labels.filter(l => l !== label);
+        }
+        return msg;
+      });
+      return ({ messages });
+    });
+  }
+
   render() {
     return (
       <div className='container'>
@@ -122,6 +146,8 @@ class App extends Component {
           updateRead={this.updateRead}
           updateSelectedAll={this.updateSelectedAll}
           deleteSelected={this.deleteSelected}
+          addLabel={this.addLabel}
+          removeLabel={this.removeLabel}
         />
         <MessageList
           messages={this.state.messages}
