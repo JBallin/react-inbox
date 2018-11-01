@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { shallow } from 'enzyme';
 import MessageList from './MessageList';
 
 const messages = [
@@ -18,12 +19,16 @@ const messages = [
     "selected": true,
     "labels": []
   }
-]
+];
 
 describe('MessageList', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<MessageList messages={messages}/>, div);
+    ReactDOM.render(<MessageList messages={messages} />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
-})
+  it('shallow renders messages', () => {
+    const wrapper = shallow(<MessageList messages={messages} />)
+    expect(wrapper.find('Message')).toHaveLength(messages.length)
+  });
+});
