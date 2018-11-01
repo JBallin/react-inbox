@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import ToolBar from './components/ToolBar'
 import MessageList from './components/MessageList'
-import seedMessages from './db/seedMessages'
 
 class App extends Component {
-  state = { messages: seedMessages }
+  state = { messages: [] }
+
+  async componentDidMount() {
+    const messages = await fetch(`${process.env.REACT_APP_API_URL}/messages`).then(r => r.json());
+    this.setState({ messages });
+  }
 
   toggleProperty = (msg, prop) => {
     this.setState(prevState => {
