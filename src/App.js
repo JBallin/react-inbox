@@ -69,11 +69,11 @@ class App extends Component {
 
   toggle = (msg, prop) => {
     const i = this.state.messages.indexOf(msg);
-    this.setState(prev => (
+    this.setState(prevState => (
       {messages: [
-        ...prev.messages.slice(0, i),
+        ...prevState.messages.slice(0, i),
         { ...msg, [prop]: !msg[prop] },
-        ...prev.messages.slice(i + 1)
+        ...prevState.messages.slice(i + 1)
       ]}
     ))
   }
@@ -90,8 +90,8 @@ class App extends Component {
       throw new Error('Incorrect input to updateSelectedAll')
     }
 
-    this.setState(prev => ({
-      messages: prev.messages.map(msg => ({
+    this.setState(prevState => ({
+      messages: prevState.messages.map(msg => ({
         ...msg, selected: isAllSelected
       }))
     }))
@@ -101,16 +101,16 @@ class App extends Component {
   toggleStarred = msg => this.toggle(msg, 'starred')
 
   updateRead = isRead => {
-    this.setState(prev => ({
-      messages: prev.messages.map(msg => (
+    this.setState(prevState => ({
+      messages: prevState.messages.map(msg => (
           msg.selected ? {...msg, read: isRead} : msg
         ))
     }))
   }
 
   deleteSelected = () => {
-    this.setState(prev => ({
-      messages: prev.messages.filter(msg => !msg.selected)
+    this.setState(prevState => ({
+      messages: prevState.messages.filter(msg => !msg.selected)
     }))
   }
 
