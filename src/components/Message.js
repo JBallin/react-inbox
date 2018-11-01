@@ -1,7 +1,7 @@
 import React from 'react';
 import Labels from './Labels'
 
-export default ({ message, toggleSelected, toggleStarred }) => {
+const Message = ({ message, toggleSelected, toggleStarred }) => {
   const readClass = message.read ? 'read' : 'unread';
   const starClass = `star fa fa-star${message.starred ? '' : '-o' }`
   const selectedClass = message.selected ? 'selected' : '';
@@ -25,3 +25,5 @@ export default ({ message, toggleSelected, toggleStarred }) => {
     </div>
   )
 }
+
+export default Message;

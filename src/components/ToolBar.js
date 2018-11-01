@@ -16,7 +16,7 @@ const getSelected = messages => {
 }
 
 
-export default ({messages, updateRead, updateSelectedAll, deleteSelected}) => {
+const ToolBar = ({messages, updateRead, updateSelectedAll, deleteSelected}) => {
   const { amt, checkClass, isDisabled } = getSelected(messages);
   const numUnread = messages.filter(msg => !msg.read).length
 
@@ -81,3 +81,5 @@ export default ({messages, updateRead, updateSelectedAll, deleteSelected}) => {
     </div>
   )
 }
+
+export default ToolBar;
