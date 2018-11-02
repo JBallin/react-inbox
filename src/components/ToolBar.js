@@ -52,6 +52,22 @@ const ToolBar = ({
         <button
           className="btn btn-default"
           disabled={isDisabled}
+          onClick={deleteSelected}
+        >
+          <i className="fa fa-trash-o"></i>
+        </button>
+
+        <button
+          className="btn btn-default"
+          disabled={isDisabled}
+          onClick={toggleStarSelected}
+        >
+          <i className="fa fa-star-o"></i>
+        </button>
+
+        <button
+          className="btn btn-default"
+          disabled={isDisabled}
           onClick={() => updateRead(true)}
         >
           Mark As Read
@@ -89,13 +105,6 @@ const ToolBar = ({
           <option value="gschool">gschool</option>
         </select>
 
-        <button
-          className="btn btn-default"
-          disabled={isDisabled}
-          onClick={deleteSelected}
-        >
-          <i className="fa fa-trash-o"></i>
-        </button>
       </div>
     </div>
   )
