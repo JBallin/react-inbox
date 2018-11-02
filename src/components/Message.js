@@ -1,7 +1,15 @@
 import React from 'react';
-import Labels from './Labels'
+import Labels from './Labels';
 
-const Message = ({ message, isSelected, toggleSelect, toggleStar }) => {
+const Message = ({
+  message,
+  isSelected,
+  toggleSelect,
+  toggleStar,
+  updateRead,
+  toggleExpanded,
+  isExpanded
+}) => {
   const readClass = message.read ? 'read' : 'unread';
   const selectedClass = isSelected ? 'selected' : '';
   const starClass = `star fa fa-star${message.starred ? '' : '-o' }`;
@@ -15,8 +23,10 @@ const Message = ({ message, isSelected, toggleSelect, toggleStar }) => {
     <div className="col-xs-2">
       <input
         type="checkbox"
-        checked={ isSelected }
-        onChange={() => toggleSelect(message.id)}/>
+        checked={isSelected}
+        onChange={() => toggleSelect(message.id)}
+        onClick={e => e.stopPropagation()}
+      />
     </div>
   );
 
@@ -33,8 +43,11 @@ const Message = ({ message, isSelected, toggleSelect, toggleStar }) => {
     </div>
   );
 
-  return (
-    <div className={`row message ${readClass} ${selectedClass}`}>
+  const MessageLine = () => (
+    <div
+      className={`row message ${readClass} ${selectedClass}`}
+      onClick={() => toggleExpanded(message.id)}
+    >
       <div className="col-xs-1">
         <div className="row">
           <CheckBox />
@@ -43,7 +56,26 @@ const Message = ({ message, isSelected, toggleSelect, toggleStar }) => {
       </div>
       <LabelsAndSubject />
     </div>
-  )
+  );
+
+  const MessageBody = () => (
+    <div className="row message-body">
+      <div className="col-xs-11 col-xs-offset-1">
+        { message.body }
+      </div>
+    </div>
+  );
+
+  if (isExpanded) {
+    return (
+      <div>
+        <MessageLine />
+        <MessageBody />
+      </div>
+    )
+  } else {
+    return <MessageLine />
+  }
 }
 
 export default Message;

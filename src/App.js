@@ -8,7 +8,7 @@ const API_URL = `${process.env.REACT_APP_API_URL}/messages`;
 class App extends Component {
   state = {
     messages: [],
-    selectedMessages: [] ,
+    selectedMessages: [],
   }
 
   async componentDidMount() {
@@ -58,8 +58,8 @@ class App extends Component {
     else this.toggleStar(starredSelectedMessages);
   };
 
-  updateRead = (isRead) => {
-    this.fetchMessages('PATCH', this.state.selectedMessages, 'read', { read: isRead });
+  updateRead = (isRead, messages=this.state.selectedMessages) => {
+    this.fetchMessages('PATCH', messages, 'read', { read: isRead });
   };
 
   deleteSelected = async () => {
@@ -93,6 +93,7 @@ class App extends Component {
           messages={this.state.messages}
           toggleSelect={this.toggleSelect}
           toggleStar={this.toggleStar}
+          updateRead={this.updateRead}
         />
       </div>
     );
