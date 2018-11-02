@@ -8,7 +8,8 @@ const ToolBar = ({
   deleteSelected,
   addLabel,
   removeLabel,
-  toggleStarSelected
+  toggleStarSelected,
+  toggleCompose,
 }) => {
   const numSelected = selectedMessages.length;
   const numUnread = messages.filter(msg => !msg.read).length;
@@ -31,7 +32,10 @@ const ToolBar = ({
   }
 
   const ComposeButton = () => (
-    <a className="btn btn-danger">
+    <a
+      className="btn btn-danger"
+      onClick={toggleCompose}
+    >
       <i className="fa fa-plus"></i>
     </a>
   );

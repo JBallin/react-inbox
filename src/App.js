@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import ToolBar from './components/ToolBar';
 import MessageList from './components/MessageList';
+import ComposeForm from './components/ComposeForm';
 
 const API_URL = `${process.env.REACT_APP_API_URL}/messages`;
 
@@ -9,6 +10,7 @@ class App extends Component {
   state = {
     messages: [],
     selectedMessages: [],
+    isComposeOpen: false,
   }
 
   async componentDidMount() {
@@ -75,6 +77,10 @@ class App extends Component {
     this.fetchMessages('PATCH', this.state.selectedMessages, 'removeLabel', { label });
   };
 
+  toggleCompose = () => {
+    this.setState(prevState => ({ isComposeOpen: !prevState.isComposeOpen }));
+  }
+
   render() {
     return (
       <div className='container'>
@@ -87,7 +93,9 @@ class App extends Component {
           addLabel={this.addLabel}
           removeLabel={this.removeLabel}
           toggleStarSelected={this.toggleStarSelected}
+          toggleCompose={this.toggleCompose}
         />
+        { this.state.isComposeOpen && <ComposeForm /> }
         <MessageList
           selectedMessages={this.state.selectedMessages}
           messages={this.state.messages}
