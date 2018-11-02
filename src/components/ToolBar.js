@@ -2,13 +2,15 @@ import React from 'react';
 
 const ToolBar = ({
   messages,
+  selectedMessages,
   updateRead,
   toggleSelectAll,
   deleteSelected,
   addLabel,
-  removeLabel
+  removeLabel,
+  toggleStarSelected
 }) => {
-  const numSelected = messages.filter(msg => msg.selected).length;
+  const numSelected = selectedMessages.length;
   const numUnread = messages.filter(msg => !msg.read).length;
   let selectAllClass;
   let isDisabled;

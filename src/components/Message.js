@@ -1,14 +1,14 @@
 import React from 'react';
 import Labels from './Labels'
 
-const Message = ({ message, toggleSelect, toggleStar }) => {
+const Message = ({ message, isSelected, toggleSelect, toggleStar }) => {
   const readClass = message.read ? 'read' : 'unread';
-  const selectedClass = message.selected ? 'selected' : '';
+  const selectedClass = isSelected ? 'selected' : '';
   const starClass = `star fa fa-star${message.starred ? '' : '-o' }`;
 
   const starMessage = e => {
     e.stopPropagation();
-    toggleStar(message);
+    toggleStar([message.id]);
   }
 
   return (
@@ -18,8 +18,8 @@ const Message = ({ message, toggleSelect, toggleStar }) => {
           <div className="col-xs-2">
             <input
               type="checkbox"
-              checked={ !!message.selected }
-              onChange={() => toggleSelect(message)}/>
+              checked={ isSelected }
+              onChange={() => toggleSelect(message.id)}/>
           </div>
           <div className="col-xs-2">
             <i className={starClass} onClick={starMessage}></i>
