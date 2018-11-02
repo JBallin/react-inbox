@@ -22,8 +22,12 @@ class App extends Component {
     });
   };
 
-  toggleStar = msg => {
-    this.toggleProperty(msg, 'starred');
+  toggleStar = async (msg) => {
+    const body = JSON.stringify({ messageIds: [msg.id], command: 'star' });
+    const headers = { 'Content-Type': 'application/json' };
+    const patchResponse = await fetch(API_URL, { method: 'PATCH', body, headers });
+    const messages = await patchResponse.json();
+    this.setState({ messages });
   };
 
   toggleSelect = msg => {
