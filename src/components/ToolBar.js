@@ -14,6 +14,7 @@ const ToolBar = ({
   const numUnread = messages.filter(msg => !msg.read).length;
   let selectAllClass;
   let isDisabled;
+  const labels = ['dev', 'gschool', 'personal'];
 
   switch(numSelected) {
     case 0:
@@ -29,82 +30,86 @@ const ToolBar = ({
       isDisabled = false;
   }
 
+  const composeButton = (
+    <a className="btn btn-danger">
+      <i className="fa fa-plus"></i>
+    </a>
+  );
+
+  const selectButton = (
+    <button
+      className="btn btn-default"
+      onClick={toggleSelectAll}
+      disabled={!messages.length}
+    >
+      <i className={`fa fa-${selectAllClass}square-o`}></i>
+    </button>
+  );
+
+  const trashButton = (
+    <button
+      className="btn btn-default"
+      disabled={isDisabled}
+      onClick={deleteSelected}
+    >
+      <i className="fa fa-trash-o"></i>
+    </button>
+  );
+
+  const starButton = (
+    <button
+      className="btn btn-default"
+      disabled={isDisabled}
+      onClick={toggleStarSelected}
+    >
+      <i className="fa fa-star-o"></i>
+    </button>
+  );
+
+  const ReadButton = ({isRead}) => (
+    <button
+      className="btn btn-default"
+      disabled={isDisabled}
+      onClick={() => updateRead(isRead)}
+    >
+      Mark as {isRead ? "Read" : "Unread"}
+    </button>
+  );
+
+  const LabelSelect = ({value, onChange}) => {
+    const labelOptions = labels.map((label, i) => <option value={label} key={i}>{label}</option>);
+    const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
+    return (
+      <select
+        value={value}
+        className="form-control label-select"
+        disabled={isDisabled}
+        onChange={e => onChange(e.target.value)}
+      >
+        <option value={value} disabled>{capitalize(value)} label</option>
+        { labelOptions }
+      </select>
+  )};
+
+  const unreadCounter = (
+    <p className="pull-right">
+      <span className="badge badge">{numUnread}</span>
+      unread message{`${numUnread === 1 ? '': 's'}`}
+    </p>
+  );
+
   return (
     <div className="row toolbar">
       <div className="col-md-12">
-        <p className="pull-right">
-          <span className="badge badge">{numUnread}</span>
-          unread message{`${numUnread === 1 ? '': 's'}`}
-        </p>
-
-        <a className="btn btn-danger">
-          <i className="fa fa-plus"></i>
-        </a>
-
-        <button
-          className="btn btn-default"
-          onClick={toggleSelectAll}
-          disabled={!messages.length}
-        >
-          <i className={`fa fa-${selectAllClass}square-o`}></i>
-        </button>
-
-        <button
-          className="btn btn-default"
-          disabled={isDisabled}
-          onClick={deleteSelected}
-        >
-          <i className="fa fa-trash-o"></i>
-        </button>
-
-        <button
-          className="btn btn-default"
-          disabled={isDisabled}
-          onClick={toggleStarSelected}
-        >
-          <i className="fa fa-star-o"></i>
-        </button>
-
-        <button
-          className="btn btn-default"
-          disabled={isDisabled}
-          onClick={() => updateRead(true)}
-        >
-          Mark As Read
-        </button>
-
-        <button
-          className="btn btn-default"
-          disabled={isDisabled}
-          onClick={() => updateRead(false)}
-        >
-          Mark As Unread
-        </button>
-
-        <select
-          value="apply"
-          className="form-control label-select"
-          disabled={isDisabled}
-          onChange={e => {addLabel(e.target.value)}}
-        >
-          <option value="apply" disabled>Apply label</option>
-          <option value="dev">dev</option>
-          <option value="personal">personal</option>
-          <option value="gschool">gschool</option>
-        </select>
-
-        <select
-          value="remove"
-          className="form-control label-select"
-          disabled={isDisabled}
-          onChange={e => {removeLabel(e.target.value)}}
-        >
-          <option value="remove" disabled>Remove label</option>
-          <option value="dev">dev</option>
-          <option value="personal">personal</option>
-          <option value="gschool">gschool</option>
-        </select>
-
+        { composeButton }
+        { selectButton }
+        { trashButton }
+        { starButton }
+        <ReadButton isRead={true} />
+        <ReadButton isRead={false} />
+        <LabelSelect value="apply" onChange={addLabel} />
+        <LabelSelect value="remove" onChange={removeLabel} />
+        { unreadCounter }
       </div>
     </div>
   )
