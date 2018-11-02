@@ -3,11 +3,13 @@ import './App.css';
 import ToolBar from './components/ToolBar';
 import MessageList from './components/MessageList';
 
+const API_URL = `${process.env.REACT_APP_API_URL}/messages`;
+
 class App extends Component {
   state = { messages: [] }
 
   async componentDidMount() {
-    const messages = await fetch(`${process.env.REACT_APP_API_URL}/messages`).then(r => r.json());
+    const messages = await fetch(API_URL).then(r => r.json());
     this.setState({ messages });
   }
 
