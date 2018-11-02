@@ -11,7 +11,7 @@ const Message = ({ message, isSelected, toggleSelect, toggleStar }) => {
     toggleStar([message.id]);
   }
 
-  const checkBox = (
+  const CheckBox = () => (
     <div className="col-xs-2">
       <input
         type="checkbox"
@@ -20,13 +20,13 @@ const Message = ({ message, isSelected, toggleSelect, toggleStar }) => {
     </div>
   );
 
-  const star = (
+  const Star = () => (
     <div className="col-xs-2">
       <i className={starClass} onClick={starMessage}></i>
     </div>
   );
 
-  const labelsAndSubject = (
+  const LabelsAndSubject = () => (
     <div className="col-xs-11">
       <Labels labels={message.labels} />
       <a>{message.subject}</a>
@@ -37,11 +37,11 @@ const Message = ({ message, isSelected, toggleSelect, toggleStar }) => {
     <div className={`row message ${readClass} ${selectedClass}`}>
       <div className="col-xs-1">
         <div className="row">
-          { checkBox }
-          { star }
+          <CheckBox />
+          <Star />
         </div>
       </div>
-      { labelsAndSubject }
+      <LabelsAndSubject />
     </div>
   )
 }

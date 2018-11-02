@@ -30,13 +30,13 @@ const ToolBar = ({
       isDisabled = false;
   }
 
-  const composeButton = (
+  const ComposeButton = () => (
     <a className="btn btn-danger">
       <i className="fa fa-plus"></i>
     </a>
   );
 
-  const selectButton = (
+  const SelectButton = () => (
     <button
       className="btn btn-default"
       onClick={toggleSelectAll}
@@ -46,7 +46,7 @@ const ToolBar = ({
     </button>
   );
 
-  const trashButton = (
+  const TrashButton = () => (
     <button
       className="btn btn-default"
       disabled={isDisabled}
@@ -56,7 +56,7 @@ const ToolBar = ({
     </button>
   );
 
-  const starButton = (
+  const StarButton = () => (
     <button
       className="btn btn-default"
       disabled={isDisabled}
@@ -91,7 +91,7 @@ const ToolBar = ({
       </select>
   )};
 
-  const unreadCounter = (
+  const UnreadCounter = () => (
     <p className="pull-right">
       <span className="badge badge">{numUnread}</span>
       unread message{`${numUnread === 1 ? '': 's'}`}
@@ -101,15 +101,15 @@ const ToolBar = ({
   return (
     <div className="row toolbar">
       <div className="col-md-12">
-        { composeButton }
-        { selectButton }
-        { trashButton }
-        { starButton }
+        <ComposeButton />
+        <SelectButton />
+        <TrashButton />
+        <StarButton />
         <ReadButton isRead={true} />
         <ReadButton isRead={false} />
         <LabelSelect value="apply" onChange={addLabel} />
         <LabelSelect value="remove" onChange={removeLabel} />
-        { unreadCounter }
+        <UnreadCounter />
       </div>
     </div>
   )
