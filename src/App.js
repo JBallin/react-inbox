@@ -97,27 +97,38 @@ class App extends Component {
       />
     );
 
+    const Header = () => (
+      <div className="navbar navbar-default">
+        <div className="navbar-header">
+          <a className="navbar-brand" href="/">React Inbox</a>
+        </div>
+      </div>
+    );
+
     return (
-      <div className='container'>
-        <ToolBar
-          messages={this.state.messages}
-          selectedMessages={this.state.selectedMessages}
-          updateRead={this.updateRead}
-          toggleSelectAll={this.toggleSelectAll}
-          deleteSelected={this.deleteSelected}
-          addLabel={this.addLabel}
-          removeLabel={this.removeLabel}
-          toggleStarSelected={this.toggleStarSelected}
-          toggleCompose={this.toggleCompose}
-        />
-        { this.state.isComposeOpen ? composeForm : "" }
-        <MessageList
-          selectedMessages={this.state.selectedMessages}
-          messages={this.state.messages}
-          toggleSelect={this.toggleSelect}
-          toggleStar={this.toggleStar}
-          updateRead={this.updateRead}
-        />
+      <div>
+        <Header />
+        <div className='container'>
+          <ToolBar
+            messages={this.state.messages}
+            selectedMessages={this.state.selectedMessages}
+            updateRead={this.updateRead}
+            toggleSelectAll={this.toggleSelectAll}
+            deleteSelected={this.deleteSelected}
+            addLabel={this.addLabel}
+            removeLabel={this.removeLabel}
+            toggleStarSelected={this.toggleStarSelected}
+            toggleCompose={this.toggleCompose}
+          />
+          { this.state.isComposeOpen ? composeForm : "" }
+          <MessageList
+            selectedMessages={this.state.selectedMessages}
+            messages={this.state.messages}
+            toggleSelect={this.toggleSelect}
+            toggleStar={this.toggleStar}
+            updateRead={this.updateRead}
+          />
+        </div>
       </div>
     );
   }
