@@ -2,7 +2,7 @@
 
 ### Description
 
-Gmail clone that stores data in-memory using an [API](https://g-api.herokuapp.com) provided by Galvanize. I was given the basic HTML structure but otherwise built everything on my own.
+Gmail clone that stores data in-memory using an [API](https://g-api.herokuapp.com) provided by Galvanize (with some modifications). I was given the basic HTML structure and seed data but otherwise built everything on my own.
 
 ### Usage
 
