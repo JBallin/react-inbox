@@ -22,7 +22,7 @@ class App extends Component {
     try {
       const getMessages = fetch(API_URL).then(r => r.json());
       const messages = (await Promise.all([getMessages, delayedPromise]))[0];
-      this.setState({ messages, loading: false })
+      this.setState({ messages: messages.reverse(), loading: false })
     } catch (err) {
       this.setState({error: `Error fetching API`})
     }
@@ -56,7 +56,7 @@ class App extends Component {
     const headers = { 'Content-Type': 'application/json' };
     const patchResponse = await fetch(API_URL, { method: 'PATCH', body, headers });
     const messages = await patchResponse.json();
-    this.setState({ messages });
+    this.setState({ messages: messages.reverse() });
   }
 
   toggleStar = (messageIds) => {
@@ -97,7 +97,7 @@ class App extends Component {
     const headers = { 'Content-Type': 'application/json' };
     const postResponse = await fetch(API_URL, { method: 'POST', body, headers });
     const newMessage = await postResponse.json();
-    this.setState(prevState => ({ messages: [...prevState.messages, newMessage ] }));
+    this.setState(prevState => ({ messages: [newMessage, ...prevState.messages] }));
   }
 
   render() {
