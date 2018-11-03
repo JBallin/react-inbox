@@ -81,7 +81,22 @@ class App extends Component {
     this.setState(prevState => ({ isComposeOpen: !prevState.isComposeOpen }));
   }
 
+  composeMessage = async msg => {
+    this.toggleCompose();
+    const body = JSON.stringify(msg);
+    const headers = { 'Content-Type': 'application/json' };
+    const postResponse = await fetch(API_URL, { method: 'POST', body, headers });
+    const newMessage = await postResponse.json();
+    this.setState(prevState => ({ messages: [...prevState.messages, newMessage ] }));
+  }
+
   render() {
+    const composeForm = (
+      <ComposeForm
+        composeMessage={this.composeMessage}
+      />
+    );
+
     return (
       <div className='container'>
         <ToolBar
@@ -95,7 +110,7 @@ class App extends Component {
           toggleStarSelected={this.toggleStarSelected}
           toggleCompose={this.toggleCompose}
         />
-        { this.state.isComposeOpen && <ComposeForm /> }
+        { this.state.isComposeOpen ? composeForm : "" }
         <MessageList
           selectedMessages={this.state.selectedMessages}
           messages={this.state.messages}
