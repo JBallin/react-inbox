@@ -114,7 +114,7 @@ class App extends Component {
       </div>
     );
 
-    const Inbox = () => (
+    const Inbox = (
       <div className='container'>
         <ToolBar
           messages={this.state.messages}
@@ -148,7 +148,7 @@ class App extends Component {
       const { loading, error } = this.state;
       if (error) return <Error />;
       if (loading) return <Spinner />;
-      return <Inbox />;
+      return Inbox;
     }
 
     return (
