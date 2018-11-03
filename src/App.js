@@ -51,16 +51,20 @@ class App extends Component {
     });
   };
 
-  updateMessages = async (messageIds, command, options={}) => {
+  patchMessages = async (messageIds, command, options={}) => {
     const body = JSON.stringify({ messageIds, command, ...options });
     const headers = { 'Content-Type': 'application/json' };
     const patchResponse = await fetch(API_URL, { method: 'PATCH', body, headers });
     const messages = await patchResponse.json();
-    this.setState({ messages: messages.reverse() });
-  }
+    return messages.reverse();
+  };
+
+  patchMessagesAndState = async (...args) => {
+    this.setState({ messages: await this.patchMessages(...args) });
+  };
 
   toggleStar = (messageIds) => {
-    this.updateMessages(messageIds, 'star');
+    this.patchMessagesAndState(messageIds, 'star');
   };
 
   toggleStarSelected = () => {
@@ -71,20 +75,26 @@ class App extends Component {
   };
 
   updateRead = (isRead, messages=this.state.selectedMessages) => {
-    this.updateMessages(messages, 'read', { read: isRead });
+    return this.patchMessages(messages, 'read', { read: isRead });
+  };
+
+  updateReadAndState = async (...args) => {
+    const messages = await this.updateRead(...args);
+    this.setState({ messages });
+  };
   };
 
   deleteSelected = async () => {
-    this.updateMessages(this.state.selectedMessages, 'delete');
-    this.setState({ selectedMessages: [] })
+    const messages = await this.patchMessages(this.state.selectedMessages, 'delete');
+    this.setState({ selectedMessages: [], messages })
   };
 
   addLabel = label => {
-    this.updateMessages(this.state.selectedMessages, 'addLabel', { label });
+    this.patchMessagesAndState(this.state.selectedMessages, 'addLabel', { label });
   };
 
   removeLabel = label => {
-    this.updateMessages(this.state.selectedMessages, 'removeLabel', { label });
+    this.patchMessagesAndState(this.state.selectedMessages, 'removeLabel', { label });
   };
 
   toggleCompose = () => {
@@ -120,7 +130,7 @@ class App extends Component {
         <ToolBar
           messages={this.state.messages}
           selectedMessages={this.state.selectedMessages}
-          updateRead={this.updateRead}
+          updateRead={this.updateReadAndState}
           toggleSelectAll={this.toggleSelectAll}
           deleteSelected={this.deleteSelected}
           addLabel={this.addLabel}
