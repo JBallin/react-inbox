@@ -37,17 +37,17 @@ const Message = ({
   );
 
   const LabelsAndSubject = () => (
-    <div className="col-xs-11">
+    <div
+      className="col-xs-11"
+      onClick={() => toggleExpanded(message.id)}
+    >
       <Labels labels={message.labels} />
       <a>{message.subject}</a>
     </div>
   );
 
   const MessageLine = () => (
-    <div
-      className={`row message ${readClass} ${selectedClass}`}
-      onClick={() => toggleExpanded(message.id)}
-    >
+    <div className={`row message ${readClass} ${selectedClass}`}>
       <div className="col-xs-1">
         <div className="row">
           <CheckBox />
