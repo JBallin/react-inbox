@@ -11,7 +11,6 @@ This was built using [Create React App](https://github.com/facebook/create-react
 ```shell
 $ yarn install
 $ yarn start
-$ open http://localhost:3000
 ```
 
 Note: [API](https://github.com/JBallin/g-api) must be running as well.
