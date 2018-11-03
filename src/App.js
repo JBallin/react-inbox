@@ -3,6 +3,7 @@ import './App.css';
 import ToolBar from './components/ToolBar';
 import MessageList from './components/MessageList';
 import ComposeForm from './components/ComposeForm';
+import Spinner from './components/Spinner';
 
 const API_URL = `${process.env.REACT_APP_API_URL}/messages`;
 
@@ -11,11 +12,14 @@ class App extends Component {
     messages: [],
     selectedMessages: [],
     isComposeOpen: false,
+    loading: true,
   }
 
   async componentDidMount() {
     const messages = await fetch(API_URL).then(r => r.json());
-    this.setState({ messages });
+    setTimeout(() => {
+      this.setState({ messages, loading: false })
+    }, 700);
   }
 
   toggleSelect = msgId => {
@@ -105,30 +109,34 @@ class App extends Component {
       </div>
     );
 
+    const Inbox = () => (
+      <div className='container'>
+        <ToolBar
+          messages={this.state.messages}
+          selectedMessages={this.state.selectedMessages}
+          updateRead={this.updateRead}
+          toggleSelectAll={this.toggleSelectAll}
+          deleteSelected={this.deleteSelected}
+          addLabel={this.addLabel}
+          removeLabel={this.removeLabel}
+          toggleStarSelected={this.toggleStarSelected}
+          toggleCompose={this.toggleCompose}
+        />
+        { this.state.isComposeOpen ? composeForm : "" }
+        <MessageList
+          selectedMessages={this.state.selectedMessages}
+          messages={this.state.messages}
+          toggleSelect={this.toggleSelect}
+          toggleStar={this.toggleStar}
+          updateRead={this.updateRead}
+        />
+      </div>
+    );
+
     return (
       <div>
         <Header />
-        <div className='container'>
-          <ToolBar
-            messages={this.state.messages}
-            selectedMessages={this.state.selectedMessages}
-            updateRead={this.updateRead}
-            toggleSelectAll={this.toggleSelectAll}
-            deleteSelected={this.deleteSelected}
-            addLabel={this.addLabel}
-            removeLabel={this.removeLabel}
-            toggleStarSelected={this.toggleStarSelected}
-            toggleCompose={this.toggleCompose}
-          />
-          { this.state.isComposeOpen ? composeForm : "" }
-          <MessageList
-            selectedMessages={this.state.selectedMessages}
-            messages={this.state.messages}
-            toggleSelect={this.toggleSelect}
-            toggleStar={this.toggleStar}
-            updateRead={this.updateRead}
-          />
-        </div>
+        { this.state.loading ? <Spinner /> : <Inbox /> }
       </div>
     );
   }
