@@ -111,12 +111,14 @@ class App extends Component {
   }
 
   composeMessage = async msg => {
-    this.toggleCompose();
     const body = JSON.stringify(msg);
     const headers = { 'Content-Type': 'application/json' };
     const postResponse = await fetch(API_URL, { method: 'POST', body, headers });
     const newMessage = await postResponse.json();
-    this.setState(prevState => ({ messages: [newMessage, ...prevState.messages] }));
+    this.setState(prevState => ({
+      messages: [newMessage, ...prevState.messages],
+      isComposeOpen: !prevState.isComposeOpen
+    }));
   }
 
   render() {
