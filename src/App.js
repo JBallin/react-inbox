@@ -17,11 +17,12 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    const delay = 700;
+    const delayedPromise = new Promise(resolve => setTimeout(resolve, delay));
     try {
-      const messages = await fetch(API_URL).then(r => r.json());
-      setTimeout(() => {
-        this.setState({ messages, loading: false })
-      }, 700);
+      const getMessages = fetch(API_URL).then(r => r.json());
+      const messages = (await Promise.all([getMessages, delayedPromise]))[0];
+      this.setState({ messages, loading: false })
     } catch (err) {
       this.setState({error: `Error fetching API`})
     }
