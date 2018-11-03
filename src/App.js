@@ -14,6 +14,7 @@ class App extends Component {
     isComposeOpen: false,
     loading: true,
     error: false,
+    expandedMessage: '',
   }
 
   async componentDidMount() {
@@ -82,6 +83,14 @@ class App extends Component {
     const messages = await this.updateRead(...args);
     this.setState({ messages });
   };
+
+  toggleExpanded = async (msgId) => {
+    if (this.state.expandedMessage === msgId) {
+      this.setState({ expandedMessage: "" });
+    } else {
+      const messages = await this.updateRead(true, [msgId])
+      this.setState({ expandedMessage: msgId, messages });
+    }
   };
 
   deleteSelected = async () => {
@@ -145,6 +154,8 @@ class App extends Component {
           toggleSelect={this.toggleSelect}
           toggleStar={this.toggleStar}
           updateRead={this.updateRead}
+          expandedMessage={this.state.expandedMessage}
+          toggleExpanded={this.toggleExpanded}
         />
       </div>
     );
