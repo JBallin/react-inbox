@@ -13,13 +13,18 @@ class App extends Component {
     selectedMessages: [],
     isComposeOpen: false,
     loading: true,
+    error: false,
   }
 
   async componentDidMount() {
-    const messages = await fetch(API_URL).then(r => r.json());
-    setTimeout(() => {
-      this.setState({ messages, loading: false })
-    }, 700);
+    try {
+      const messages = await fetch(API_URL).then(r => r.json());
+      setTimeout(() => {
+        this.setState({ messages, loading: false })
+      }, 700);
+    } catch (err) {
+      this.setState({error: `Error fetching API`})
+    }
   }
 
   toggleSelect = msgId => {
@@ -133,10 +138,23 @@ class App extends Component {
       </div>
     );
 
+    const Error = () => (
+      <div className="container">
+        <h2>{ this.state.error }</h2>
+      </div>
+    )
+
+    const loadPage = () => {
+      const { loading, error } = this.state;
+      if (error) return <Error />;
+      if (loading) return <Spinner />;
+      return <Inbox />;
+    }
+
     return (
       <div>
         <Header />
-        { this.state.loading ? <Spinner /> : <Inbox /> }
+        { loadPage() }
       </div>
     );
   }
