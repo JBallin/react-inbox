@@ -41,16 +41,16 @@ class App extends Component {
     });
   };
 
-  fetchMessages = async (method, messageIds, command, options={}) => {
+  updateMessages = async (messageIds, command, options={}) => {
     const body = JSON.stringify({ messageIds, command, ...options });
     const headers = { 'Content-Type': 'application/json' };
-    const patchResponse = await fetch(API_URL, { method, body, headers });
+    const patchResponse = await fetch(API_URL, { method: 'PATCH', body, headers });
     const messages = await patchResponse.json();
     this.setState({ messages });
   }
 
   toggleStar = (messageIds) => {
-    this.fetchMessages('PATCH', messageIds, 'star');
+    this.updateMessages(messageIds, 'star');
   };
 
   toggleStarSelected = () => {
@@ -61,20 +61,20 @@ class App extends Component {
   };
 
   updateRead = (isRead, messages=this.state.selectedMessages) => {
-    this.fetchMessages('PATCH', messages, 'read', { read: isRead });
+    this.updateMessages(messages, 'read', { read: isRead });
   };
 
   deleteSelected = async () => {
-    this.fetchMessages('PATCH', this.state.selectedMessages, 'delete');
+    this.updateMessages(this.state.selectedMessages, 'delete');
     this.setState({ selectedMessages: [] })
   };
 
   addLabel = label => {
-    this.fetchMessages('PATCH', this.state.selectedMessages, 'addLabel', { label });
+    this.updateMessages(this.state.selectedMessages, 'addLabel', { label });
   };
 
   removeLabel = label => {
-    this.fetchMessages('PATCH', this.state.selectedMessages, 'removeLabel', { label });
+    this.updateMessages(this.state.selectedMessages, 'removeLabel', { label });
   };
 
   toggleCompose = () => {
