@@ -32,12 +32,12 @@ const ToolBar = ({
   }
 
   const ComposeButton = () => (
-    <a
+    <button
       className="btn btn-danger"
       onClick={toggleCompose}
     >
       <i className="fa fa-plus"></i>
-    </a>
+    </button>
   );
 
   const SelectButton = () => (
