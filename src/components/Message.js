@@ -42,7 +42,7 @@ const Message = ({
       onClick={() => toggleExpanded(message.id)}
     >
       <Labels labels={message.labels} />
-      <a>{message.subject}</a>
+      <span>{message.subject}</span>
     </div>
   );
 

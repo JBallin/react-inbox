@@ -6,14 +6,6 @@
   border-bottom: 1px solid #efefef;
 }
 
-.message a {
-  color: black;
-}
-
-.message a:hover, .message a:active, .message a:focus {
-  text-decoration: none;
-}
-
 .message + .message {
   border-top: 1px solid #efefef;
 }
